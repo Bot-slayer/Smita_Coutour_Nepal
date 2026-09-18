@@ -1,0 +1,218 @@
+import { Link } from 'react-router-dom';
+import { Mail, MapPin, Phone } from 'lucide-react';
+
+function InstagramIcon({ size = 15 }: { size?: number }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+      <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+    </svg>
+  );
+}
+
+function FacebookIcon({ size = 15 }: { size?: number }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+    </svg>
+  );
+}
+
+const footerLinks = {
+  shop: [
+    { label: 'All Collections', to: '/shop' },
+    { label: 'Sarees', to: '/category/sarees' },
+    { label: 'Suits', to: '/category/suits' },
+    { label: 'Kurtis', to: '/category/kurtis' },
+    { label: 'Gowns', to: '/category/gowns' },
+    { label: 'Lehengas', to: '/category/lehengas' },
+    { label: 'Sale', to: '/sale' },
+  ],
+  info: [
+    { label: 'About Us', to: '/about' },
+    { label: 'Contact', to: '/contact' },
+    { label: 'Size Guide', to: '/about#size-guide' },
+    { label: 'Care Instructions', to: '/about#care' },
+    { label: 'Returns & Exchanges', to: '/about#returns' },
+  ],
+  account: [
+    { label: 'My Account', to: '/login' },
+    { label: 'Orders', to: '/login' },
+    { label: 'Wishlist', to: '/wishlist' },
+    { label: 'Cart', to: '/cart' },
+  ],
+};
+
+export default function Footer() {
+  return (
+    <footer className="bg-charcoal text-ivory">
+      {/* Main footer content */}
+      <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-12 pt-16 pb-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
+          {/* Brand */}
+          <div className="lg:col-span-2">
+            <Link to="/" className="block mb-6">
+              <span className="font-serif text-xl tracking-widest-lg uppercase text-ivory font-medium">
+                Smita Couture Nepal
+              </span>
+            </Link>
+            <p className="text-ivory/60 text-sm leading-relaxed mb-6 max-w-xs">
+              Curating premium South Asian fashion with the finest fabrics, meticulous craftsmanship,
+              and a deep respect for Nepali artisanal heritage.
+            </p>
+
+            {/* Contact */}
+            <div className="flex flex-col gap-3 text-sm text-ivory/60">
+              <a href="mailto:hello@smitacouture.com" className="flex items-center gap-2 hover:text-gold transition-colors">
+                <Mail size={14} /> hello@smitacouture.com
+              </a>
+              <a href="tel:+977-1-4000000" className="flex items-center gap-2 hover:text-gold transition-colors">
+                <Phone size={14} /> +977 01 400-0000
+              </a>
+              <span className="flex items-start gap-2">
+                <MapPin size={14} className="mt-0.5 shrink-0" />
+                Maharajgunj, Kathmandu, Nepal
+              </span>
+            </div>
+
+            {/* Socials */}
+            <div className="flex items-center gap-4 mt-6">
+              <a
+                href="https://instagram.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2 border border-ivory/20 text-ivory/60 hover:text-gold hover:border-gold transition-all duration-200"
+                aria-label="Instagram"
+              >
+                <InstagramIcon size={15} />
+              </a>
+              <a
+                href="https://facebook.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2 border border-ivory/20 text-ivory/60 hover:text-gold hover:border-gold transition-all duration-200"
+                aria-label="Facebook"
+              >
+                <FacebookIcon size={15} />
+              </a>
+            </div>
+          </div>
+
+          {/* Shop Links */}
+          <div>
+            <h4 className="text-xs tracking-widest-xl uppercase text-ivory/40 font-sans font-medium mb-5">
+              Shop
+            </h4>
+            <ul className="flex flex-col gap-3">
+              {footerLinks.shop.map((link) => (
+                <li key={link.label}>
+                  <Link
+                    to={link.to}
+                    className="text-sm text-ivory/60 hover:text-gold transition-colors duration-200"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Info Links */}
+          <div>
+            <h4 className="text-xs tracking-widest-xl uppercase text-ivory/40 font-sans font-medium mb-5">
+              Information
+            </h4>
+            <ul className="flex flex-col gap-3">
+              {footerLinks.info.map((link) => (
+                <li key={link.label}>
+                  <Link
+                    to={link.to}
+                    className="text-sm text-ivory/60 hover:text-gold transition-colors duration-200"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Account Links */}
+          <div>
+            <h4 className="text-xs tracking-widest-xl uppercase text-ivory/40 font-sans font-medium mb-5">
+              My Account
+            </h4>
+            <ul className="flex flex-col gap-3">
+              {footerLinks.account.map((link) => (
+                <li key={link.label}>
+                  <Link
+                    to={link.to}
+                    className="text-sm text-ivory/60 hover:text-gold transition-colors duration-200"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        {/* Newsletter */}
+        <div className="mt-14 pt-10 border-t border-ivory/10">
+          <div className="flex flex-col md:flex-row md:items-center gap-6 md:gap-12">
+            <div className="md:flex-1">
+              <p className="font-serif text-lg text-ivory mb-1">
+                Join the Inner Circle
+              </p>
+              <p className="text-sm text-ivory/50">
+                Be the first to know about new arrivals, exclusive events and private sales.
+              </p>
+            </div>
+            <form className="flex gap-0 flex-1 max-w-sm" onSubmit={(e) => e.preventDefault()}>
+              <input
+                type="email"
+                placeholder="Your email address"
+                className="flex-1 bg-transparent border border-ivory/20 px-4 py-3 text-sm text-ivory placeholder:text-ivory/30 focus:outline-none focus:border-gold transition-colors"
+              />
+              <button
+                type="submit"
+                className="bg-gold text-charcoal px-5 py-3 text-xs tracking-widest-lg uppercase font-sans font-medium hover:bg-ivory transition-colors duration-200 whitespace-nowrap"
+              >
+                Subscribe
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      {/* Bottom bar */}
+      <div className="border-t border-ivory/10">
+        <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-12 py-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-ivory/30">
+          <span>© {new Date().getFullYear()} Smita Couture Nepal. All rights reserved.</span>
+          <div className="flex items-center gap-4">
+            <Link to="/about#privacy" className="hover:text-gold transition-colors">Privacy Policy</Link>
+            <Link to="/about#terms" className="hover:text-gold transition-colors">Terms of Service</Link>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+}
