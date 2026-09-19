@@ -1,4 +1,5 @@
 import ImagePlaceholder from '@/components/ui/ImagePlaceholder';
+import { useWebsiteSettings } from '@/context/WebsiteSettingsContext';
 
 const timeline = [
   { year: '2003', event: 'Founded in Kathmandu', desc: 'Smita Couture Nepal opens its first bespoke tailoring atelier in Maharajgunj, Kathmandu.' },
@@ -28,6 +29,8 @@ const values = [
 ];
 
 export default function AboutPage() {
+  const { images } = useWebsiteSettings();
+
   return (
     <div className="bg-ivory min-h-screen">
       {/* Editorial Hero */}
@@ -130,6 +133,7 @@ export default function AboutPage() {
         <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-12">
           <div className="relative overflow-hidden bg-light-taupe shadow-sm">
             <ImagePlaceholder
+              src={images.about_atelier}
               title="Smita Couture Kathmandu Atelier"
               subtitle="Insert boutique or embroidery workshop photography (1600 × 600 px)"
               aspectRatio="wide"
@@ -137,6 +141,106 @@ export default function AboutPage() {
             />
           </div>
         </div>
+      </div>
+      {/* Detailed Information Sections (Anchors for Footer) */}
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-20 divide-y divide-border/60">
+        {/* Shipping */}
+        <section id="shipping" className="py-16 scroll-mt-24">
+          <h2 className="font-serif text-2xl text-charcoal mb-6 uppercase tracking-wider">Shipping & Delivery</h2>
+          <div className="text-sm text-taupe space-y-4 leading-relaxed font-sans">
+            <p>We provide secure delivery services across all provinces of Nepal through our trusted logistics partners. For international orders, please contact our atelier directly via WhatsApp.</p>
+            <ul className="list-disc pl-5 space-y-2">
+              <li><strong>Within Kathmandu Valley:</strong> 2-3 business days.</li>
+              <li><strong>Outside Kathmandu Valley:</strong> 5-7 business days.</li>
+              <li><strong>Bespoke / Custom Orders:</strong> 3-6 weeks depending on craftsmanship complexity.</li>
+            </ul>
+            <p>Complimentary delivery is available for orders above रू 5,000 within Nepal.</p>
+          </div>
+        </section>
+
+        {/* Returns */}
+        <section id="returns" className="py-16 scroll-mt-24">
+          <h2 className="font-serif text-2xl text-charcoal mb-6 uppercase tracking-wider">Returns & Exchanges</h2>
+          <div className="text-sm text-taupe space-y-4 leading-relaxed font-sans">
+            <p>As our pieces are often limited edition or handcrafted, we maintain the following policy to ensure quality:</p>
+            <ul className="list-disc pl-5 space-y-2">
+              <li>Exchanges are accepted within 7 days of delivery for standard collection pieces in original, unworn condition with all tags attached.</li>
+              <li><strong>Custom-made, bespoke measurements, and sale items are final sale and cannot be returned or exchanged.</strong></li>
+              <li>In case of manufacturing defects, please notify us within 48 hours of receipt for a resolution.</li>
+            </ul>
+          </div>
+        </section>
+
+        {/* Size Guide */}
+        <section id="size-guide" className="py-16 scroll-mt-24">
+          <h2 className="font-serif text-2xl text-charcoal mb-6 uppercase tracking-wider">Size Guide</h2>
+          <div className="overflow-x-auto mt-4">
+            <table className="w-full text-xs text-left border-collapse border border-border">
+              <thead>
+                <tr className="bg-light-taupe text-charcoal">
+                  <th className="p-3 border border-border uppercase tracking-widest">Size</th>
+                  <th className="p-3 border border-border uppercase tracking-widest">Bust (In)</th>
+                  <th className="p-3 border border-border uppercase tracking-widest">Waist (In)</th>
+                  <th className="p-3 border border-border uppercase tracking-widest">Hip (In)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td className="p-3 border border-border font-medium">XS</td>
+                  <td className="p-3 border border-border">32</td>
+                  <td className="p-3 border border-border">25</td>
+                  <td className="p-3 border border-border">35</td>
+                </tr>
+                <tr className="bg-ivory/40">
+                  <td className="p-3 border border-border font-medium">S</td>
+                  <td className="p-3 border border-border">34</td>
+                  <td className="p-3 border border-border">27</td>
+                  <td className="p-3 border border-border">37</td>
+                </tr>
+                <tr>
+                  <td className="p-3 border border-border font-medium">M</td>
+                  <td className="p-3 border border-border">36</td>
+                  <td className="p-3 border border-border">29</td>
+                  <td className="p-3 border border-border">39</td>
+                </tr>
+                <tr className="bg-ivory/40">
+                  <td className="p-3 border border-border font-medium">L</td>
+                  <td className="p-3 border border-border">38</td>
+                  <td className="p-3 border border-border">31</td>
+                  <td className="p-3 border border-border">41</td>
+                </tr>
+                <tr>
+                  <td className="p-3 border border-border font-medium">XL</td>
+                  <td className="p-3 border border-border">40</td>
+                  <td className="p-3 border border-border">33</td>
+                  <td className="p-3 border border-border">43</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p className="mt-4 text-[10px] text-taupe font-sans italic">
+            * We strongly recommend using our Bespoke Measurement service for a flawless fit.
+          </p>
+        </section>
+
+        {/* FAQs */}
+        <section id="faqs" className="py-16 scroll-mt-24">
+          <h2 className="font-serif text-2xl text-charcoal mb-6 uppercase tracking-wider">Frequently Asked Questions</h2>
+          <div className="space-y-6">
+            <div>
+              <h3 className="text-sm font-medium text-charcoal mb-2 font-serif">Do you have a physical store?</h3>
+              <p className="text-xs text-taupe leading-relaxed">Yes, our primary atelier is located in Maharajgunj, Kathmandu. Visits are primarily by appointment for bespoke bridal consultations.</p>
+            </div>
+            <div>
+              <h3 className="text-sm font-medium text-charcoal mb-2 font-serif">Can I order a custom color?</h3>
+              <p className="text-xs text-taupe leading-relaxed">Most of our handloom sarees and bridal lehengas can be customized in specific shades. This process typically adds 4-6 weeks to the delivery time.</p>
+            </div>
+            <div>
+              <h3 className="text-sm font-medium text-charcoal mb-2 font-serif">How should I care for my silk sarees?</h3>
+              <p className="text-xs text-taupe leading-relaxed">We recommend professional dry cleaning only. Store your sarees in pure muslin bags to allow the fabric to breathe and prevent zari oxidation.</p>
+            </div>
+          </div>
+        </section>
       </div>
     </div>
   );

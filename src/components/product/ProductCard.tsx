@@ -5,6 +5,7 @@ import type { Product } from '@/types';
 import { formatCurrency } from '@/utils/format';
 import { useCartStore } from '@/store/cartStore';
 import { useWishlistStore } from '@/store/wishlistStore';
+import { useWebsiteSettings } from '@/context/WebsiteSettingsContext';
 import ImagePlaceholder from '@/components/ui/ImagePlaceholder';
 import QuickViewModal from './QuickViewModal';
 import toast from 'react-hot-toast';
@@ -16,6 +17,7 @@ interface ProductCardProps {
 
 export default function ProductCard({ product, layout = 'grid' }: ProductCardProps) {
   const [quickViewOpen, setQuickViewOpen] = useState(false);
+  const { content } = useWebsiteSettings();
 
   const addToCart = useCartStore((s) => s.addItem);
   const openDrawer = useCartStore((s) => s.openDrawer);
@@ -98,15 +100,15 @@ export default function ProductCard({ product, layout = 'grid' }: ProductCardPro
                 <button
                   onClick={handleQuickView}
                   className="btn-outline text-xs py-2 px-3 flex items-center gap-1.5"
-                  title="Quick View"
+                  title={content.viewDetailsLabel || 'Quick View'}
                 >
-                  <Eye size={13} /> Quick View
+                  <Eye size={13} /> {content.viewDetailsLabel || 'Quick View'}
                 </button>
                 <button
                   onClick={handleAddToCart}
                   className="btn-primary text-xs py-2 px-4 flex items-center gap-1.5"
                 >
-                  <ShoppingBag size={13} /> Add to Bag
+                  <ShoppingBag size={13} /> {content.addToCartLabel || 'Add to Bag'}
                 </button>
                 <button
                   onClick={handleWishlist}
@@ -182,7 +184,7 @@ export default function ProductCard({ product, layout = 'grid' }: ProductCardPro
             onClick={handleQuickView}
             className="absolute bottom-3 left-1/2 -translate-x-1/2 z-10 opacity-0 group-hover:opacity-100 transition-all duration-300 bg-ivory/95 backdrop-blur-md text-charcoal text-[11px] font-sans font-medium tracking-widest uppercase px-4 py-2 border border-border shadow-md hover:bg-charcoal hover:text-ivory whitespace-nowrap flex items-center gap-1.5"
           >
-            <Eye size={13} /> Quick View
+            <Eye size={13} /> {content.viewDetailsLabel || 'Quick View'}
           </button>
         </div>
 
@@ -216,7 +218,7 @@ export default function ProductCard({ product, layout = 'grid' }: ProductCardPro
             onClick={handleAddToCart}
             className="mt-4 w-full py-2.5 px-4 text-xs font-sans font-medium tracking-widest uppercase border border-charcoal text-charcoal hover:bg-charcoal hover:text-ivory transition-colors duration-200 flex items-center justify-center gap-2"
           >
-            <ShoppingBag size={13} /> Add to Bag
+            <ShoppingBag size={13} /> {content.addToCartLabel || 'Add to Bag'}
           </button>
         </div>
       </div>

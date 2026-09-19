@@ -198,8 +198,8 @@ export default function ProductFilters({
               className="w-full accent-gold cursor-pointer"
             />
             <div className="flex justify-between text-xs font-mono text-taupe mt-2">
-              <span>NPR 0</span>
-              <span className="font-medium text-charcoal">NPR {priceRange[1].toLocaleString()}</span>
+              <span>रू 0</span>
+              <span className="font-medium text-charcoal">रू {priceRange[1].toLocaleString()}</span>
             </div>
           </div>
         )}

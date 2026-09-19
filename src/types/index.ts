@@ -75,6 +75,7 @@ export interface User {
   displayName: string;
   phone?: string;
   photoURL?: string;
+  role: 'admin' | 'customer';
   addresses?: SavedAddress[];
   createdAt: string;
 }

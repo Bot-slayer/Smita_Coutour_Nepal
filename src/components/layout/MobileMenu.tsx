@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
 import { NavLink, Link } from 'react-router-dom';
-import { X, User, Heart } from 'lucide-react';
+import { X, User, Heart, ShoppingBag } from 'lucide-react';
 import { useWishlistStore } from '@/store/wishlistStore';
+import { useAuthStore } from '@/store/authStore';
 
 interface NavLinkItem {
   label: string;
@@ -16,6 +17,7 @@ interface MobileMenuProps {
 
 export default function MobileMenu({ isOpen, onClose, navLinks }: MobileMenuProps) {
   const wishlistCount = useWishlistStore((s) => s.items.length);
+  const user = useAuthStore((s) => s.user);
 
   // Lock body scroll when open
   useEffect(() => {
@@ -70,11 +72,11 @@ export default function MobileMenu({ isOpen, onClose, navLinks }: MobileMenuProp
         {/* Footer links */}
         <div className="px-6 py-6 border-t border-border flex flex-col gap-4">
           <Link
-            to="/login"
+            to={user ? "/account" : "/login"}
             onClick={onClose}
             className="flex items-center gap-3 text-sm text-charcoal hover:text-gold transition-colors"
           >
-            <User size={16} /> My Account
+            <User size={16} /> {user ? 'My Account' : 'Sign In'}
           </Link>
           <Link
             to="/wishlist"

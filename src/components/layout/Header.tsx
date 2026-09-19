@@ -3,6 +3,8 @@ import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { Search, User, Heart, ShoppingBag, Menu, X } from 'lucide-react';
 import { useCartStore } from '@/store/cartStore';
 import { useWishlistStore } from '@/store/wishlistStore';
+import { useAuthStore } from '@/store/authStore';
+import { useWebsiteSettings } from '@/context/WebsiteSettingsContext';
 import MobileMenu from './MobileMenu';
 
 const navLinks = [
@@ -24,6 +26,17 @@ export default function Header() {
   const totalItems = useCartStore((s) => s.totalItems());
   const wishlistCount = useWishlistStore((s) => s.items.length);
   const openCart = useCartStore((s) => s.openDrawer);
+  const user = useAuthStore((s) => s.user);
+  const { content } = useWebsiteSettings();
+
+  const dynamicNavLinks = [
+    { label: content.navHome || 'Home', to: '/' },
+    { label: content.navShop || 'Shop', to: '/shop' },
+    { label: content.navNewArrivals || 'New Arrivals', to: '/shop?filter=new' },
+    { label: content.navCollections || 'Collections', to: '/shop' },
+    { label: content.navSale || 'Sale', to: '/sale' },
+    { label: content.navAbout || 'About', to: '/about' },
+  ];
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 40);
@@ -54,24 +67,26 @@ export default function Header() {
         }`}
       >
         <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-12">
-          <div className="flex items-center justify-between h-16 lg:h-20">
+          <div className="flex items-center h-16 lg:h-20">
 
             {/* Left: Desktop Nav */}
-            <nav className="hidden lg:flex items-center gap-8 flex-1">
-              {navLinks.map((link) => (
-                <NavLink
-                  key={link.label}
-                  to={link.to}
-                  className={({ isActive }) =>
-                    `text-xs tracking-widest-lg uppercase font-sans font-medium transition-colors duration-200 ${
-                      isActive ? 'text-gold' : 'text-charcoal hover:text-gold'
-                    }`
-                  }
-                >
-                  {link.label}
-                </NavLink>
-              ))}
-            </nav>
+            <div className="hidden lg:flex items-center flex-1">
+              <nav className="flex items-center gap-6">
+                {dynamicNavLinks.map((link) => (
+                  <NavLink
+                    key={link.label}
+                    to={link.to}
+                    className={({ isActive }) =>
+                      `text-[11px] tracking-widest uppercase font-sans font-medium transition-colors duration-200 whitespace-nowrap ${
+                        isActive ? 'text-gold' : 'text-charcoal hover:text-gold'
+                      }`
+                    }
+                  >
+                    {link.label}
+                  </NavLink>
+                ))}
+              </nav>
+            </div>
 
             {/* Mobile: Hamburger */}
             <button
@@ -83,63 +98,85 @@ export default function Header() {
             </button>
 
             {/* Center: Logo */}
-            <Link
-              to="/"
-              className="absolute left-1/2 -translate-x-1/2 text-center"
-              aria-label="Smita Couture Nepal — Home"
-            >
-              <span className="font-serif text-sm sm:text-base lg:text-lg tracking-widest-lg uppercase text-charcoal whitespace-nowrap font-medium">
-                Smita Couture Nepal
-              </span>
-            </Link>
+            <div className="flex-none text-center px-4 lg:px-8">
+              <Link
+                to="/"
+                className="inline-block"
+                aria-label="Smita Couture Nepal — Home"
+              >
+                <span className="font-serif text-sm sm:text-base lg:text-lg tracking-widest-lg uppercase text-charcoal whitespace-nowrap font-medium">
+                  Smita Couture Nepal
+                </span>
+              </Link>
+            </div>
 
             {/* Right: Icons */}
-            <div className="flex items-center gap-1 sm:gap-3 flex-1 justify-end">
+            <div className="flex items-center gap-1 sm:gap-2 flex-1 justify-end">
               {/* Search */}
-              <button
-                onClick={() => setSearchOpen((v) => !v)}
-                className="p-2 text-charcoal hover:text-gold transition-colors"
-                aria-label="Search"
-              >
-                <Search size={18} />
-              </button>
+              <div className="relative group/tooltip">
+                <button
+                  onClick={() => setSearchOpen((v) => !v)}
+                  className="p-2 text-charcoal hover:text-gold transition-colors"
+                  aria-label="Search"
+                >
+                  <Search size={18} />
+                </button>
+                <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 px-2 py-1 bg-charcoal text-ivory text-[9px] tracking-widest uppercase opacity-0 group-hover/tooltip:opacity-100 group-hover/tooltip:-translate-y-1 transition-all duration-200 pointer-events-none whitespace-nowrap z-50 font-sans">
+                  Search
+                </span>
+              </div>
 
               {/* Account */}
-              <Link
-                to="/login"
-                className="hidden sm:flex p-2 text-charcoal hover:text-gold transition-colors"
-                aria-label="Account"
-              >
-                <User size={18} />
-              </Link>
+              <div className="relative group/tooltip hidden sm:block">
+                <Link
+                  to={user ? "/account" : "/login"}
+                  className="p-2 text-charcoal hover:text-gold transition-colors"
+                  aria-label={user ? "My Account" : "Sign In"}
+                >
+                  <User size={18} />
+                </Link>
+                <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 px-2 py-1 bg-charcoal text-ivory text-[9px] tracking-widest uppercase opacity-0 group-hover/tooltip:opacity-100 group-hover/tooltip:-translate-y-1 transition-all duration-200 pointer-events-none whitespace-nowrap z-50 font-sans">
+                  {user ? 'Account' : 'Login'}
+                </span>
+              </div>
 
               {/* Wishlist */}
-              <Link
-                to="/wishlist"
-                className="p-2 text-charcoal hover:text-gold transition-colors relative"
-                aria-label="Wishlist"
-              >
-                <Heart size={18} />
-                {wishlistCount > 0 && (
-                  <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-gold text-charcoal text-[10px] font-bold rounded-full flex items-center justify-center">
-                    {wishlistCount}
-                  </span>
-                )}
-              </Link>
+              <div className="relative group/tooltip">
+                <Link
+                  to="/wishlist"
+                  className="p-2 text-charcoal hover:text-gold transition-colors relative"
+                  aria-label="Wishlist"
+                >
+                  <Heart size={18} />
+                  {wishlistCount > 0 && (
+                    <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-gold text-charcoal text-[10px] font-bold rounded-full flex items-center justify-center">
+                      {wishlistCount}
+                    </span>
+                  )}
+                </Link>
+                <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 px-2 py-1 bg-charcoal text-ivory text-[9px] tracking-widest uppercase opacity-0 group-hover/tooltip:opacity-100 group-hover/tooltip:-translate-y-1 transition-all duration-200 pointer-events-none whitespace-nowrap z-50 font-sans">
+                  Wishlist
+                </span>
+              </div>
 
               {/* Cart */}
-              <button
-                onClick={openCart}
-                className="p-2 text-charcoal hover:text-gold transition-colors relative"
-                aria-label="Shopping bag"
-              >
-                <ShoppingBag size={18} />
-                {totalItems > 0 && (
-                  <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-charcoal text-ivory text-[10px] font-bold rounded-full flex items-center justify-center">
-                    {totalItems}
-                  </span>
-                )}
-              </button>
+              <div className="relative group/tooltip">
+                <button
+                  onClick={openCart}
+                  className="p-2 text-charcoal hover:text-gold transition-colors relative"
+                  aria-label="Shopping bag"
+                >
+                  <ShoppingBag size={18} />
+                  {totalItems > 0 && (
+                    <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-charcoal text-ivory text-[10px] font-bold rounded-full flex items-center justify-center">
+                      {totalItems}
+                    </span>
+                  )}
+                </button>
+                <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 px-2 py-1 bg-charcoal text-ivory text-[9px] tracking-widest uppercase opacity-0 group-hover/tooltip:opacity-100 group-hover/tooltip:-translate-y-1 transition-all duration-200 pointer-events-none whitespace-nowrap z-50 font-sans">
+                  Bag ({totalItems})
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -175,7 +212,7 @@ export default function Header() {
       <MobileMenu
         isOpen={mobileMenuOpen}
         onClose={() => setMobileMenuOpen(false)}
-        navLinks={navLinks}
+        navLinks={dynamicNavLinks}
       />
     </>
   );

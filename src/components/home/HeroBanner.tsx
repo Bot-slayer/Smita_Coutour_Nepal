@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import HeroImagePlaceholder from '@/components/ui/HeroImagePlaceholder';
+import { useWebsiteSettings } from '@/context/WebsiteSettingsContext';
 
 interface HeroBannerProps {
   /**
@@ -10,6 +11,8 @@ interface HeroBannerProps {
 }
 
 export default function HeroBanner({ imageSrc }: HeroBannerProps) {
+  const { content } = useWebsiteSettings();
+
   return (
     <section className="relative min-h-[82vh] lg:min-h-[90vh] flex items-center justify-center overflow-hidden bg-charcoal">
       {/* Background Hero Image / Luxury Placeholder */}
@@ -36,17 +39,16 @@ export default function HeroBanner({ imageSrc }: HeroBannerProps) {
 
           {/* Main Title */}
           <h1 className="font-serif text-4xl sm:text-6xl lg:text-7xl text-ivory font-normal tracking-wide uppercase leading-[1.1] mb-6">
-            Smita Couture Nepal
+            {content.heroTitle || 'Smita Couture Nepal'}
           </h1>
 
           {/* Tagline */}
           <p className="font-serif text-lg sm:text-2xl text-gold/90 italic font-light max-w-2xl mb-10 tracking-wide">
-            "Timeless Elegance. Crafted for You."
+            "{content.heroTagline || 'Timeless Elegance. Crafted for You.'}"
           </p>
 
           <p className="font-sans text-xs sm:text-sm uppercase tracking-widest text-ivory/70 max-w-xl mb-12 leading-relaxed">
-            Exquisite South Asian silhouettes, pure handloom silks, and bespoke Nepali craftsmanship
-            for weddings, galas, and life’s most celebrated moments.
+            {content.heroDescription || 'Exquisite South Asian silhouettes, pure handloom silks, and bespoke Nepali craftsmanship for weddings, galas, and life’s most celebrated moments.'}
           </p>
 
           {/* Buttons */}
@@ -55,13 +57,13 @@ export default function HeroBanner({ imageSrc }: HeroBannerProps) {
               to="/shop"
               className="w-full sm:w-auto inline-flex items-center justify-center bg-ivory text-charcoal hover:bg-gold hover:text-charcoal px-8 py-4 text-xs font-sans font-semibold tracking-[0.2em] uppercase transition-all duration-300 shadow-xl"
             >
-              Shop Collection
+              {content.heroPrimaryButtonText || 'Shop Collection'}
             </Link>
             <Link
               to="/shop?filter=new"
               className="w-full sm:w-auto inline-flex items-center justify-center border border-ivory/80 text-ivory hover:bg-ivory hover:text-charcoal px-8 py-4 text-xs font-sans font-semibold tracking-[0.2em] uppercase backdrop-blur-xs transition-all duration-300"
             >
-              Explore New Arrivals
+              {content.heroSecondaryButtonText || 'Explore New Arrivals'}
             </Link>
           </div>
         </div>

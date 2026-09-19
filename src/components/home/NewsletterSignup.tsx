@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import toast from 'react-hot-toast';
+import { useWebsiteSettings } from '@/context/WebsiteSettingsContext';
 
-export default function NewsletterSignup() {
+export default function NewsletterSignup({ backgroundImage }: { backgroundImage?: string }) {
   const [email, setEmail] = useState('');
   const [submitted, setSubmitted] = useState(false);
+  const { content } = useWebsiteSettings();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -14,20 +16,31 @@ export default function NewsletterSignup() {
 
   return (
     <section className="bg-charcoal py-20 sm:py-28 relative overflow-hidden">
+      {/* Background Image Overlay */}
+      {backgroundImage && (
+        <div className="absolute inset-0 z-0">
+          <img
+            src={backgroundImage}
+            alt=""
+            className="w-full h-full object-cover opacity-20"
+          />
+          <div className="absolute inset-0 bg-charcoal/60" />
+        </div>
+      )}
+
       {/* Decorative element */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 border border-ivory/5 rounded-full pointer-events-none" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] border border-ivory/3 rounded-full pointer-events-none" />
 
       <div className="relative max-w-2xl mx-auto px-4 sm:px-6 text-center">
         <p className="text-xs tracking-widest-xl uppercase text-ivory/40 font-sans mb-5">
-          Exclusive Access
+          {content.newsletterLabel || 'Exclusive Access'}
         </p>
         <h2 className="font-serif text-display-sm text-ivory mb-4 leading-tight">
-          Join the Inner Circle
+          {content.newsletterTitle || 'Join the Inner Circle'}
         </h2>
         <p className="text-ivory/50 text-base leading-relaxed mb-10 max-w-md mx-auto">
-          Be the first to receive new arrivals, members-only offers, styling inspiration,
-          and invitations to exclusive Smita Couture events.
+          {content.newsletterDescription || 'Be the first to receive new arrivals, members-only offers, styling inspiration, and invitations to exclusive Smita Couture events.'}
         </p>
 
         {submitted ? (
@@ -51,7 +64,7 @@ export default function NewsletterSignup() {
               type="submit"
               className="bg-gold text-charcoal px-6 py-3.5 text-xs tracking-widest-lg uppercase font-sans font-medium hover:bg-ivory transition-colors duration-200 whitespace-nowrap"
             >
-              Subscribe
+              {content.newsletterButtonText || 'Subscribe'}
             </button>
           </form>
         )}

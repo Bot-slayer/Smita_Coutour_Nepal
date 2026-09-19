@@ -1,12 +1,47 @@
+import { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import ProductGrid from '@/components/product/ProductGrid';
-import { sampleProducts } from '@/data/sampleProducts';
+import Pagination from '@/components/ui/Pagination';
+import { productService } from '@/services/productService';
 import { Tag, Sparkles } from 'lucide-react';
+import type { Product } from '@/types';
+
+const PAGE_SIZE = 18;
 
 export default function SalePage() {
-  // Strict filter: only genuine sale products with actual original and sale prices
-  const saleProducts = sampleProducts.filter(
-    (p) => (p.isOnSale === true || p.isSale === true) && p.originalPrice && p.originalPrice > p.price
-  );
+  const [searchParams, setSearchParams] = useSearchParams();
+  const queryPage = Number(searchParams.get('page')) || 1;
+
+  const [saleProducts, setSaleProducts] = useState<Product[]>([]);
+  const [totalCount, setTotalCount] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetch = async () => {
+      try {
+        setIsLoading(true);
+        const { products, total } = await productService.getPaginated({
+          page: queryPage,
+          pageSize: PAGE_SIZE,
+          isSale: true,
+        });
+        setSaleProducts(products);
+        setTotalCount(total);
+      } catch (error) {
+        console.error('Failed to load sale products:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetch();
+  }, [queryPage]);
+
+  const handlePageChange = (page: number) => {
+    setSearchParams({ page: page.toString() });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const totalPages = Math.ceil(totalCount / PAGE_SIZE);
 
   return (
     <div className="bg-ivory min-h-screen">
@@ -58,8 +93,18 @@ export default function SalePage() {
         <ProductGrid
           products={saleProducts}
           columns={4}
+          isLoading={isLoading}
           emptyMessage="No pieces are currently marked for seasonal markdown. Please visit our main catalog."
         />
+
+        {/* Pagination */}
+        {!isLoading && totalPages > 1 && (
+          <Pagination
+            currentPage={queryPage}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+          />
+        )}
       </div>
     </div>
   );

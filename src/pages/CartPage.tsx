@@ -255,7 +255,7 @@ export default function CartPage() {
                 <div className="flex justify-between items-center text-taupe">
                   <span>Discount</span>
                   <span className={`font-mono text-sm ${discount > 0 ? 'text-emerald-700 font-medium' : 'text-charcoal'}`}>
-                    {discount > 0 ? `- ${formatCurrency(discount)}` : 'NPR 0'}
+                    {discount > 0 ? `- ${formatCurrency(discount)}` : 'रू 0'}
                   </span>
                 </div>
 

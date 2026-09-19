@@ -1,9 +1,9 @@
 /**
- * Format a number as NPR currency
- * e.g. 24500 → "NPR 24,500"
+ * Format a number as Nepali currency
+ * e.g. 24500 → "रू 24,500"
  */
 export function formatCurrency(amount: number): string {
-  return `NPR ${amount.toLocaleString('en-US')}`;
+  return `रू ${amount.toLocaleString('en-NP')}`;
 }
 
 /**

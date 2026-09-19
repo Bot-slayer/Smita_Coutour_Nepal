@@ -1,8 +1,23 @@
+
+/*
+ * ============================================================
+ * Google Fonts
+ * ============================================================
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Serif+Display&family=Inter:wght@300;400;500;600;700&family=Libre+Baskerville:wght@400;700&family=Lora:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* ─── Base Styles ─────────────────────────────────────────────────────────── */
+
+/*
+ * ============================================================
+ * Base Styles
+ * ============================================================
+ */
+
 @layer base {
   *,
   *::before,
@@ -18,18 +33,41 @@
 
   body {
     @apply bg-ivory text-charcoal font-sans;
+
     font-size: 16px;
     line-height: 1.6;
     min-height: 100vh;
+
+    color: rgb(var(--website-text-rgb));
+    background-color: rgb(var(--website-background-rgb));
+
+    font-family:
+      var(--website-body-font),
+      Inter,
+      system-ui,
+      sans-serif;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     @apply font-serif;
+
+    font-family:
+      var(--website-heading-font),
+      "Playfair Display",
+      Georgia,
+      serif;
+
     font-weight: 500;
   }
 
   a {
     @apply text-inherit no-underline;
+
     transition: color 0.2s ease;
   }
 
@@ -42,31 +80,79 @@
     cursor: pointer;
   }
 
-  input, textarea, select {
+  input,
+  textarea,
+  select {
     @apply font-sans;
+
+    font-family:
+      var(--website-body-font),
+      Inter,
+      system-ui,
+      sans-serif;
   }
 }
 
-/* ─── Custom Component Classes ────────────────────────────────────────────── */
+
+/*
+ * ============================================================
+ * Custom Component Classes
+ * ============================================================
+ */
+
 @layer components {
-  /* Brand text mark */
+  /*
+   * Brand text mark
+   */
+
   .brand-mark {
     @apply font-serif tracking-widest-lg text-charcoal uppercase text-sm;
+
+    font-family:
+      var(--website-heading-font),
+      "Playfair Display",
+      Georgia,
+      serif;
+
     font-style: normal;
     font-weight: 500;
   }
 
-  /* Elegant section heading */
+
+  /*
+   * Elegant section heading
+   */
+
   .section-heading {
     @apply font-serif text-display-sm text-charcoal;
+
+    font-family:
+      var(--website-heading-font),
+      "Playfair Display",
+      Georgia,
+      serif;
   }
 
-  /* Section sub label */
+
+  /*
+   * Section sub label
+   */
+
   .section-label {
     @apply text-xs tracking-widest-xl uppercase text-taupe font-sans font-medium;
+
+    font-family:
+      var(--website-body-font),
+      Inter,
+      system-ui,
+      sans-serif;
   }
 
-  /* Primary button */
+
+  /*
+   * Primary button
+   */
+
   .btn-primary {
     @apply inline-flex items-center justify-center gap-2
            bg-charcoal text-ivory px-8 py-3
@@ -74,9 +160,21 @@
            transition-all duration-300
            hover:bg-gold hover:text-charcoal
            focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold;
+
+    border-radius: var(--website-button-radius);
+
+    font-family:
+      var(--website-body-font),
+      Inter,
+      system-ui,
+      sans-serif;
   }
 
-  /* Outline button */
+
+  /*
+   * Outline button
+   */
+
   .btn-outline {
     @apply inline-flex items-center justify-center gap-2
            border border-charcoal text-charcoal px-8 py-3
@@ -84,9 +182,21 @@
            transition-all duration-300
            hover:bg-charcoal hover:text-ivory
            focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-charcoal;
+
+    border-radius: var(--website-button-radius);
+
+    font-family:
+      var(--website-body-font),
+      Inter,
+      system-ui,
+      sans-serif;
   }
 
-  /* Ghost button */
+
+  /*
+   * Ghost button
+   */
+
   .btn-ghost {
     @apply inline-flex items-center justify-center gap-2
            text-charcoal px-4 py-2
@@ -94,68 +204,249 @@
            transition-all duration-200
            hover:text-gold
            focus-visible:outline-none;
+
+    border-radius: var(--website-button-radius);
+
+    font-family:
+      var(--website-body-font),
+      Inter,
+      system-ui,
+      sans-serif;
   }
 
-  /* Clean form input */
+
+  /*
+   * Clean form input
+   */
+
   .form-input {
     @apply w-full border border-border bg-white px-4 py-3
            text-charcoal text-sm font-sans
            placeholder:text-taupe/60
            focus:outline-none focus:border-charcoal
            transition-colors duration-200;
+
+    font-family:
+      var(--website-body-font),
+      Inter,
+      system-ui,
+      sans-serif;
   }
 
-  /* Product card hover */
+
+  /*
+   * Product card hover
+   */
+
   .product-card {
     @apply relative cursor-pointer;
   }
 
-  /* Divider with text */
+
+  /*
+   * Divider with text
+   */
+
   .divider-text {
     @apply flex items-center gap-4 text-xs tracking-widest-xl uppercase text-taupe;
   }
+
   .divider-text::before,
   .divider-text::after {
     content: '';
+
     @apply flex-1 h-px bg-border;
   }
 }
 
-/* ─── Scrollbar Styling ────────────────────────────────────────────────────── */
+
+/*
+ * ============================================================
+ * Dynamic Button Radius
+ * ============================================================
+ */
+
+button,
+.btn-primary,
+.btn-outline,
+.btn-ghost {
+  border-radius: var(--website-button-radius);
+}
+
+
+/*
+ * ============================================================
+ * Dynamic Body
+ * ============================================================
+ */
+
+body {
+  color: rgb(var(--website-text-rgb));
+  background-color: rgb(var(--website-background-rgb));
+
+  font-family:
+    var(--website-body-font),
+    Inter,
+    system-ui,
+    sans-serif;
+}
+
+
+/*
+ * ============================================================
+ * Dynamic Headings
+ * ============================================================
+ */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family:
+    var(--website-heading-font),
+    "Playfair Display",
+    Georgia,
+    serif;
+}
+
+
+/*
+ * ============================================================
+ * Dynamic Form Fonts
+ * ============================================================
+ */
+
+input,
+textarea,
+select {
+  font-family:
+    var(--website-body-font),
+    Inter,
+    system-ui,
+    sans-serif;
+}
+
+
+/*
+ * ============================================================
+ * Scrollbar Styling
+ * ============================================================
+ */
+
 ::-webkit-scrollbar {
   width: 6px;
 }
+
 ::-webkit-scrollbar-track {
-  background: #FAF9F6;
-}
-::-webkit-scrollbar-thumb {
-  background: #C9A96E;
-  border-radius: 3px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #1A1A1A;
+  background: rgb(var(--website-background-rgb));
 }
 
-/* ─── Page transitions ─────────────────────────────────────────────────────── */
+::-webkit-scrollbar-thumb {
+  background: rgb(var(--website-accent-rgb));
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(var(--website-primary-rgb));
+}
+
+
+/*
+ * ============================================================
+ * Page Transitions
+ * ============================================================
+ */
+
 .page-enter {
   opacity: 0;
   transform: translateY(12px);
 }
+
 .page-enter-active {
   opacity: 1;
   transform: translateY(0);
-  transition: opacity 0.4s ease, transform 0.4s ease;
+
+  transition:
+    opacity 0.4s ease,
+    transform 0.4s ease;
 }
 
-/* ─── Cart Drawer overlay ──────────────────────────────────────────────────── */
+
+/*
+ * ============================================================
+ * Cart Drawer Overlay
+ * ============================================================
+ */
+
 .drawer-overlay {
   @apply fixed inset-0 bg-black/40 backdrop-blur-sm z-40;
 }
 
-/* ─── Image aspect ratio helpers ───────────────────────────────────────────── */
+
+/*
+ * ============================================================
+ * Image Aspect Ratio Helpers
+ * ============================================================
+ */
+
 .aspect-portrait {
   aspect-ratio: 3 / 4;
 }
+
 .aspect-square {
   aspect-ratio: 1 / 1;
 }
+
+
+/*
+ * ============================================================
+ * Dynamic Appearance Fallbacks
+ * ============================================================
+ */
+
+:root {
+  --website-primary-rgb: 26 26 26;
+  --website-accent-rgb: 201 169 110;
+  --website-background-rgb: 250 249 246;
+  --website-text-rgb: 26 26 26;
+  --website-border-rgb: 232 228 223;
+  --website-light-taupe-rgb: 242 237 232;
+
+  --website-primary: #1a1a1a;
+  --website-accent: #c9a96e;
+  --website-background: #faf9f6;
+  --website-text: #1a1a1a;
+
+  --website-button-radius: 0px;
+
+  --website-heading-font: "Playfair Display";
+  --website-body-font: "Inter";
+}
+
+
+/*
+ * ============================================================
+ * Responsive Typography
+ * ============================================================
+ */
+
+@media (max-width: 768px) {
+  .text-display-xl {
+    font-size: 3rem;
+  }
+
+  .text-display-lg {
+    font-size: 2.5rem;
+  }
+
+  .text-display-md {
+    font-size: 2rem;
+  }
+
+  .text-display-sm {
+    font-size: 1.75rem;
+  }
+}
+

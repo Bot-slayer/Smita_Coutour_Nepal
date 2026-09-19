@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Mail, MapPin, Phone } from 'lucide-react';
+import { useWebsiteSettings } from '@/context/WebsiteSettingsContext';
 
 function InstagramIcon({ size = 15 }: { size?: number }) {
   return (
@@ -37,84 +38,62 @@ function FacebookIcon({ size = 15 }: { size?: number }) {
   );
 }
 
+function TikTokIcon({ size = 15 }: { size?: number }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
+    </svg>
+  );
+}
+
 const footerLinks = {
   shop: [
-    { label: 'All Collections', to: '/shop' },
-    { label: 'Sarees', to: '/category/sarees' },
-    { label: 'Suits', to: '/category/suits' },
-    { label: 'Kurtis', to: '/category/kurtis' },
-    { label: 'Gowns', to: '/category/gowns' },
-    { label: 'Lehengas', to: '/category/lehengas' },
+    { label: 'New Arrivals', to: '/shop?filter=new' },
+    { label: 'Collections', to: '/shop' },
     { label: 'Sale', to: '/sale' },
+    { label: 'Best Sellers', to: '/shop?filter=best' },
   ],
-  info: [
-    { label: 'About Us', to: '/about' },
+  customerCare: [
     { label: 'Contact', to: '/contact' },
+    { label: 'Shipping', to: '/about#shipping' },
+    { label: 'Returns', to: '/about#returns' },
     { label: 'Size Guide', to: '/about#size-guide' },
-    { label: 'Care Instructions', to: '/about#care' },
-    { label: 'Returns & Exchanges', to: '/about#returns' },
+    { label: 'FAQs', to: '/about#faqs' },
   ],
   account: [
-    { label: 'My Account', to: '/login' },
-    { label: 'Orders', to: '/login' },
+    { label: 'My Account', to: '/account' },
+    { label: 'Orders', to: '/account/orders' },
     { label: 'Wishlist', to: '/wishlist' },
-    { label: 'Cart', to: '/cart' },
   ],
 };
 
 export default function Footer() {
+  const { content } = useWebsiteSettings();
+
   return (
     <footer className="bg-charcoal text-ivory">
       {/* Main footer content */}
       <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-12 pt-16 pb-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
           {/* Brand */}
-          <div className="lg:col-span-2">
+          <div className="lg:col-span-1">
             <Link to="/" className="block mb-6">
               <span className="font-serif text-xl tracking-widest-lg uppercase text-ivory font-medium">
                 Smita Couture Nepal
               </span>
             </Link>
-            <p className="text-ivory/60 text-sm leading-relaxed mb-6 max-w-xs">
-              Curating premium South Asian fashion with the finest fabrics, meticulous craftsmanship,
-              and a deep respect for Nepali artisanal heritage.
+            <p className="text-ivory/60 text-sm leading-relaxed mb-6">
+              {content.footerDescription || 'Curating premium South Asian fashion with the finest fabrics, meticulous craftsmanship, and a deep respect for Nepali artisanal heritage.'}
             </p>
-
-            {/* Contact */}
-            <div className="flex flex-col gap-3 text-sm text-ivory/60">
-              <a href="mailto:hello@smitacouture.com" className="flex items-center gap-2 hover:text-gold transition-colors">
-                <Mail size={14} /> hello@smitacouture.com
-              </a>
-              <a href="tel:+977-1-4000000" className="flex items-center gap-2 hover:text-gold transition-colors">
-                <Phone size={14} /> +977 01 400-0000
-              </a>
-              <span className="flex items-start gap-2">
-                <MapPin size={14} className="mt-0.5 shrink-0" />
-                Maharajgunj, Kathmandu, Nepal
-              </span>
-            </div>
-
-            {/* Socials */}
-            <div className="flex items-center gap-4 mt-6">
-              <a
-                href="https://instagram.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 border border-ivory/20 text-ivory/60 hover:text-gold hover:border-gold transition-all duration-200"
-                aria-label="Instagram"
-              >
-                <InstagramIcon size={15} />
-              </a>
-              <a
-                href="https://facebook.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 border border-ivory/20 text-ivory/60 hover:text-gold hover:border-gold transition-all duration-200"
-                aria-label="Facebook"
-              >
-                <FacebookIcon size={15} />
-              </a>
-            </div>
           </div>
 
           {/* Shop Links */}
@@ -136,13 +115,13 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Info Links */}
+          {/* Customer Care Links */}
           <div>
             <h4 className="text-xs tracking-widest-xl uppercase text-ivory/40 font-sans font-medium mb-5">
-              Information
+              Customer Care
             </h4>
             <ul className="flex flex-col gap-3">
-              {footerLinks.info.map((link) => (
+              {footerLinks.customerCare.map((link) => (
                 <li key={link.label}>
                   <Link
                     to={link.to}
@@ -158,7 +137,7 @@ export default function Footer() {
           {/* Account Links */}
           <div>
             <h4 className="text-xs tracking-widest-xl uppercase text-ivory/40 font-sans font-medium mb-5">
-              My Account
+              Account
             </h4>
             <ul className="flex flex-col gap-3">
               {footerLinks.account.map((link) => (
@@ -172,6 +151,33 @@ export default function Footer() {
                 </li>
               ))}
             </ul>
+          </div>
+
+          {/* Social */}
+          <div>
+            <h4 className="text-xs tracking-widest-xl uppercase text-ivory/40 font-sans font-medium mb-5">
+              Social
+            </h4>
+            <div className="flex flex-col gap-3">
+              <a
+                href="#"
+                className="text-sm text-ivory/60 hover:text-gold transition-colors duration-200 flex items-center gap-2"
+              >
+                <InstagramIcon size={14} /> Instagram
+              </a>
+              <a
+                href="#"
+                className="text-sm text-ivory/60 hover:text-gold transition-colors duration-200 flex items-center gap-2"
+              >
+                <FacebookIcon size={14} /> Facebook
+              </a>
+              <a
+                href="#"
+                className="text-sm text-ivory/60 hover:text-gold transition-colors duration-200 flex items-center gap-2"
+              >
+                <TikTokIcon size={14} /> TikTok
+              </a>
+            </div>
           </div>
         </div>
 
@@ -206,7 +212,7 @@ export default function Footer() {
       {/* Bottom bar */}
       <div className="border-t border-ivory/10">
         <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-12 py-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-ivory/30">
-          <span>© {new Date().getFullYear()} Smita Couture Nepal. All rights reserved.</span>
+          <span>© {new Date().getFullYear()} Smita Couture Nepal. {content.copyrightText || 'All rights reserved.'}</span>
           <div className="flex items-center gap-4">
             <Link to="/about#privacy" className="hover:text-gold transition-colors">Privacy Policy</Link>
             <Link to="/about#terms" className="hover:text-gold transition-colors">Terms of Service</Link>

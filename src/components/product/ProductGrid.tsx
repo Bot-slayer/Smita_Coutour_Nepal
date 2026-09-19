@@ -1,11 +1,13 @@
 import type { Product } from '@/types';
 import ProductCard from './ProductCard';
+import { ProductSkeleton } from '../ui/Skeleton';
 
 interface ProductGridProps {
   products: Product[];
   columns?: 2 | 3 | 4;
   layout?: 'grid' | 'list';
   emptyMessage?: string;
+  isLoading?: boolean;
 }
 
 export default function ProductGrid({
@@ -13,7 +15,24 @@ export default function ProductGrid({
   columns = 3,
   layout = 'grid',
   emptyMessage = 'No products found.',
+  isLoading = false,
 }: ProductGridProps) {
+  const colClass = {
+    2: 'grid-cols-1 sm:grid-cols-2',
+    3: 'grid-cols-2 sm:grid-cols-2 lg:grid-cols-3',
+    4: 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-4',
+  }[columns];
+
+  if (isLoading) {
+    return (
+      <div className={`grid ${colClass} gap-x-5 gap-y-10 sm:gap-x-8`}>
+        {Array.from({ length: 6 }).map((_, i) => (
+          <ProductSkeleton key={i} />
+        ))}
+      </div>
+    );
+  }
+
   if (products.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-24 text-center">
@@ -34,12 +53,6 @@ export default function ProductGrid({
       </div>
     );
   }
-
-  const colClass = {
-    2: 'grid-cols-1 sm:grid-cols-2',
-    3: 'grid-cols-2 sm:grid-cols-2 lg:grid-cols-3',
-    4: 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-4',
-  }[columns];
 
   return (
     <div className={`grid ${colClass} gap-x-5 gap-y-10 sm:gap-x-8`}>

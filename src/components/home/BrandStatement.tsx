@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import ImagePlaceholder from '@/components/ui/ImagePlaceholder';
+import { useWebsiteSettings } from '@/context/WebsiteSettingsContext';
 
 interface BrandStatementProps {
   imageSrc?: string;

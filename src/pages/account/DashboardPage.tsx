@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { User, Package, Heart, MapPin, LogOut, ChevronRight, Settings } from 'lucide-react';
+import { User, Package, Heart, MapPin, LogOut, ChevronRight, Settings, ShieldCheck } from 'lucide-react';
 import { useAuthStore } from '@/store/authStore';
 import toast from 'react-hot-toast';
 
@@ -58,6 +58,18 @@ export default function DashboardPage() {
     },
   ];
 
+  // Add Admin Console for staff
+  if (user.role === 'admin') {
+    menuItems.unshift({
+      label: 'Admin Console',
+      desc: 'Manage product catalog, inventory, and business operations',
+      icon: ShieldCheck,
+      href: '/admin/products',
+      color: 'text-gold',
+      bg: 'bg-gold/10',
+    });
+  }
+
   return (
     <div className="bg-ivory min-h-screen py-12">
       <div className="max-w-4xl mx-auto px-4 sm:px-6">
@@ -67,9 +79,16 @@ export default function DashboardPage() {
             {user.displayName.charAt(0)}
           </div>
           <div className="text-center sm:text-left flex-1">
-            <p className="text-[10px] tracking-widest-xl uppercase text-gold font-sans font-medium mb-1">
-              Client Portal
-            </p>
+            <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3 mb-1">
+              <p className="text-[10px] tracking-widest-xl uppercase text-gold font-sans font-medium">
+                Client Portal
+              </p>
+              {user.role === 'admin' && (
+                <span className="bg-charcoal text-gold text-[8px] tracking-[0.2em] uppercase px-2 py-0.5 font-bold border border-gold/30 shadow-xs">
+                  Administrator
+                </span>
+              )}
+            </div>
             <h1 className="font-serif text-3xl text-charcoal mb-1">Welcome, {user.displayName}</h1>
             <p className="text-sm text-taupe">{user.email}</p>
           </div>

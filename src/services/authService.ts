@@ -58,6 +58,7 @@ export const authService = {
         },
       ],
       password: payload.password,
+      role: payload.email.toLowerCase().includes('admin') ? 'admin' : 'customer',
     };
 
     existingUsers.push(newUser);
@@ -91,6 +92,7 @@ export const authService = {
         email: payload.email.toLowerCase(),
         displayName: payload.email.split('@')[0].toUpperCase(),
         phone: '+977 9801234567',
+        role: payload.email.toLowerCase().includes('admin') ? 'admin' : 'customer',
         createdAt: new Date().toISOString(),
         addresses: [
           {
